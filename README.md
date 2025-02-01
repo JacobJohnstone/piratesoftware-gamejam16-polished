@@ -1,4 +1,7 @@
-# piratesoftware-gamejam16
+# PirateSoftware-GameJam16-Polished
+An addition to the game jam submission that removes the bugs and balances the game to create a cleaner demo experience
+
+# Original Task Planning
 Ghost - J<br />
 	invis<br />
 	interact (candles, books, pots)<br />
