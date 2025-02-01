@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6867560083514047862}
   - component: {fileID: 1493727364653681894}
   - component: {fileID: 7915216135336494563}
-  - component: {fileID: 3538924034382656465}
+  - component: {fileID: 1265981664106402736}
   - component: {fileID: 3307560780325514699}
   m_Layer: 0
   m_Name: SmallBook
@@ -164,7 +164,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3538924034382656465
+--- !u!114 &1265981664106402736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6814613712350299345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0565c9319cd128439521c6bd4680c48, type: 3}
+  m_Script: {fileID: 11500000, guid: 604b45ffa30e88c44a740879f591395e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!82 &3307560780325514699

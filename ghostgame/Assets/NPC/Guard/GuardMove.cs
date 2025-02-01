@@ -1,37 +1,24 @@
 using UnityEngine;
 using Pathfinding;
-using System;
-using Pathfinding;
-using UnityEngine.InputSystem.Processors;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 
-public class GuardMove : MonoBehaviour
+public class GuardMove : AbstractNPC
 {
     float timePassed;
-    bool inDarkness;
     public Vector2 velocity;
     private AILerp aiLerp;
     [SerializeField]
     Transform targetOne;
     [SerializeField]
     Transform targetTwo;
-    [SerializeField]
-    Transform ghost;
     Transform mostRecentDestination;
     Animator anim;
     SpriteRenderer spriteRenderer;
     public bool isAngry;
-    LayerMask playerLayer;
-    LayerMask obstacleLayer;
     BoxCollider2D collider;
     Rigidbody2D rigidBody2d;
-
-    float sanity;
-    float maxSanity;
-    Slider slider;
     Light2D light;
     FlashLight flashLightDamage;
 
@@ -53,23 +40,18 @@ public class GuardMove : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2d = GetComponent<Rigidbody2D>();
-        playerLayer = LayerMask.GetMask("Player");
-        obstacleLayer = LayerMask.GetMask("Obstacle");
         timePassed = 0;
-        inDarkness = true;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         // State and destination
         currentState = StateMachine.Patrol;
         SetGuardDestination(targetOne);
         mostRecentDestination = targetOne;
         
         // Sanity/flashlight
-        sanity = 100;
-        maxSanity = 100;
-        slider = gameObject.GetComponentInChildren<Slider>();
         light = gameObject.GetComponentInChildren<Light2D>();
         flashLightDamage = gameObject.GetComponentInChildren<FlashLight>();
         collider = GetComponent<BoxCollider2D>();
@@ -101,11 +83,12 @@ public class GuardMove : MonoBehaviour
             // Checking if in patrol/angry state, if can see ghost, then chase
             if (currentState != StateMachine.Scared && currentState != StateMachine.Dead)
             {
-                Vector2 direction = (ghost.transform.position + new Vector3(0.08838356f, 0.1350673f, 0)) - transform.position;
+                // New /////////////
+                RaycastHit2D[] hits = SeeGhost();
+                RaycastHit2D playerHit = hits[0];
+                RaycastHit2D obstacleHit = hits[1];
+                ///////////////////
 
-                // Call player damage event on raycast hit
-                RaycastHit2D playerHit = Physics2D.Raycast(transform.position, direction, 5f, playerLayer);
-                RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, direction, 5f, obstacleLayer);
                 if (playerHit && playerHit.collider.tag == "Player" && !playerHit.collider.isTrigger && !obstacleHit)
                 {
                     currentState = StateMachine.Chase;
@@ -160,7 +143,7 @@ public class GuardMove : MonoBehaviour
     void Chase()
     {
         isAngry = true;
-        SetGuardDestination(ghost);
+        SetGuardDestination(ghost.transform);
         anim.SetBool("isAngry", true);
     }
 
@@ -226,42 +209,4 @@ public class GuardMove : MonoBehaviour
             ChangeSanity(-10);
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Light")
-        {
-            inDarkness = false;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Light")
-        {
-            inDarkness = true;
-        }
-        
-    }
-
-    void ChangeSanity(float change)
-    {
-
-        sanity += change;
-        if (sanity > maxSanity)
-        {
-            sanity = maxSanity;
-        }
-        slider.value = sanity;        
-    }
-
-    IEnumerator LightingSanityChange(float change)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
-            ChangeSanity(change);
-        }
-    }
-
 }

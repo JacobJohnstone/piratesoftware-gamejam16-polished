@@ -1,14 +1,11 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
-public class FlightNPC : MonoBehaviour
+public class FlightNPC : AbstractNPC
 {
-    private float sanity = 1f;
-    private bool inDarkness = true;
+
     private float interactCooldown = 0;
     GameObject interactableObject;
 
@@ -29,35 +26,29 @@ public class FlightNPC : MonoBehaviour
 
     private GameObject[] npcObjects;
     private GameObject closestNPC = null;
-    private GameObject playerObject;
-    LayerMask playerLayer;
-    LayerMask obstacleLayer;
+
 
     private AudioSource source;
     [SerializeField] private AudioClip clip;
 
-    Slider slider;
 
     [SerializeField] GameObject deadPrefab;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         path = GetComponent<AIPath>();
         npcObjects = GameObject.FindGameObjectsWithTag("NPC");
-        playerObject = GameObject.FindGameObjectWithTag("Player");
         source = GetComponent<AudioSource>();
-        playerLayer = LayerMask.GetMask("Player");
-        obstacleLayer = LayerMask.GetMask("Obstacle");
-        slider = gameObject.GetComponentInChildren<Slider>();
     }
 
     private void Update()
     {
         interactCooldown -= Time.deltaTime;
 
-        if (sanity == 0)
+        if (sanity <= 0)
         {
             //die
             Instantiate(deadPrefab, transform.position, Quaternion.identity);
@@ -66,9 +57,15 @@ public class FlightNPC : MonoBehaviour
         }
 
         //check if ghost in vision
-        Vector3 playerPosition = playerObject.transform.position + new Vector3(0,.1f,0);
-        RaycastHit2D playerHit = Physics2D.Raycast(transform.position, playerPosition - transform.position, 8f, playerLayer);
-        RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, playerPosition - transform.position, 8f, obstacleLayer);
+        //Vector3 playerPosition = playerObject.transform.position + new Vector3(0,.1f,0);
+        //RaycastHit2D playerHit = Physics2D.Raycast(transform.position, playerPosition - transform.position, 8f, playerLayer);
+        //RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, playerPosition - transform.position, 8f, obstacleLayer);
+
+        RaycastHit2D[] hits = SeeGhost();
+        RaycastHit2D playerHit = hits[0];
+        RaycastHit2D obstacleHit = hits[1];
+
+
         if (playerHit && playerHit.collider.tag == "Player" && !playerHit.collider.isTrigger && !obstacleHit)
         {
             if (!inChase)
@@ -86,7 +83,7 @@ public class FlightNPC : MonoBehaviour
 
         findClosestNPC();
         //increase sanity if near friends
-        if (calcDistance(closestNPC.transform.position)<5)
+        if (calcDistance(closestNPC.transform.position) < 5)
         {
             ChangeSanity(.01f * Time.deltaTime);
         }
@@ -102,11 +99,11 @@ public class FlightNPC : MonoBehaviour
         }
 
         //--------------------------AI Movement----------------------------
-        path.maxSpeed = maxMoveSpeed+sanity;
+        path.maxSpeed = maxMoveSpeed+ (sanity/100);
         if (inChase)//---------------Chased------------------
         {
             //faster in chase
-            path.maxSpeed = maxMoveSpeed + sanity + .5f;
+            path.maxSpeed = maxMoveSpeed + (sanity/100) + .5f;
             //try to find nearest person
             GameObject closestGuard = findClosestGuard();
             if (closestGuard != null)
@@ -115,10 +112,10 @@ public class FlightNPC : MonoBehaviour
             } else
             {
                 //all guards dead, just try to run away from ghost
-                Vector3 playerVector = playerObject.transform.position - transform.position;
+                Vector3 playerVector = ghost.transform.position - transform.position;
                 playerVector.x = playerVector.x * -1;
                 playerVector.y = playerVector.y * -1;
-                path.destination = playerVector+transform.position;
+                path.destination = playerVector + transform.position;
             }
             animator.SetBool("Running", true);
         } else if (onPath)//---------------Path to Room------------------
@@ -137,7 +134,7 @@ public class FlightNPC : MonoBehaviour
             animator.SetBool("Running", false);
             if (idle)
             {
-                if (sanity >= .5)
+                if (sanity/100 >= .5)
                 {
                     //pick random point to wander to
                     wanderTarget = Random.insideUnitSphere * 6;
@@ -190,7 +187,7 @@ public class FlightNPC : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-        animator.SetFloat("Sanity", sanity);
+        animator.SetFloat("Sanity", sanity/100);
     }
 
     IEnumerator setIdle()
@@ -250,39 +247,39 @@ public class FlightNPC : MonoBehaviour
         return closestGuard;
     }
 
-    private void ChangeSanity(float change)
-    {
-        if (sanity + change < 0)
-        {
-            sanity = 0;
-        } else if (sanity + change > 1)
-        {
-            sanity = 1;
-        }
-        else
-        {
-            sanity += change;
-        }
-        slider.value = sanity;
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Light")
-        {
-            inDarkness = false;
-            interactableObject = collision.gameObject;
-        }
-        if (collision.tag == "Interact")
-        {
-            interactableObject = collision.gameObject;
-        }
-    }
+    //private void ChangeSanity(float change)
+    //{
+    //    if (sanity + change < 0)
+    //    {
+    //        sanity = 0;
+    //    } else if (sanity + change > 1)
+    //    {
+    //        sanity = 1;
+    //    }
+    //    else
+    //    {
+    //        sanity += change;
+    //    }
+    //    slider.value = sanity;
+    //}
+//    private void OnTriggerStay2D(Collider2D collision)
+//    {
+//        if (collision.gameObject.tag == "Light")
+//        {
+//            inDarkness = false;
+//            interactableObject = collision.gameObject;
+//        }
+//        if (collision.tag == "Interact")
+//        {
+//            interactableObject = collision.gameObject;
+//        }
+//    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Light")
-        {
-            inDarkness = true;
-        }
-    }
+//    private void OnTriggerExit2D(Collider2D collision)
+//    {
+//        if (collision.gameObject.tag == "Light")
+//        {
+//            inDarkness = true;
+//        }
+//    }
 }

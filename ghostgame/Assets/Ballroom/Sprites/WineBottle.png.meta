@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1b83ab129540cfc49bc3480d50c28fec
+guid: be4348af280e99b4bbedbef0c4ab5cd0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5843985864524226762
-    second: Chair_0
+      213: 5919659600849958154
+    second: WineBottle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +46,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 7
-  spritePivot: {x: 0.5, y: 0}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -96,27 +96,40 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chair_0
+      name: WineBottle_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 0
-        width: 16
-        height: 26
+        width: 6
+        height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ac0ee575e220a1150800000000000000
-      internalID: 5843985864524226762
+      spriteID: a0574e31b0bd62250800000000000000
+      internalID: 5919659600849958154
       vertices: []
       indices: 
       edges: []
@@ -126,7 +139,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Chair_0: 5843985864524226762
+      WineBottle_0: 5919659600849958154
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
