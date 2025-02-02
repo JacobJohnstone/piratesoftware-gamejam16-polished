@@ -1,7 +1,6 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
-using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 
 public class GuardMove : AbstractNPC
@@ -83,13 +82,8 @@ public class GuardMove : AbstractNPC
             // Checking if in patrol/angry state, if can see ghost, then chase
             if (currentState != StateMachine.Scared && currentState != StateMachine.Dead)
             {
-                // New /////////////
-                RaycastHit2D[] hits = SeeGhost();
-                RaycastHit2D playerHit = hits[0];
-                RaycastHit2D obstacleHit = hits[1];
-                ///////////////////
 
-                if (playerHit && playerHit.collider.tag == "Player" && !playerHit.collider.isTrigger && !obstacleHit)
+                if (SeeGhost(5f))
                 {
                     currentState = StateMachine.Chase;
                 }
@@ -97,7 +91,6 @@ public class GuardMove : AbstractNPC
                 {
                     currentState = StateMachine.Patrol;
                 }
-
             }
         }
 

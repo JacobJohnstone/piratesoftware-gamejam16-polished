@@ -1,7 +1,6 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
-using UnityEngine.UI;
 
 public class FlightNPC : AbstractNPC
 {
@@ -11,7 +10,6 @@ public class FlightNPC : AbstractNPC
 
     Animator animator;
     SpriteRenderer spriteRenderer;
-    Rigidbody2D rigidbody2d;
 
     //Pathfinding
     private bool inChase = true;
@@ -38,10 +36,27 @@ public class FlightNPC : AbstractNPC
         base.Start();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidbody2d = GetComponent<Rigidbody2D>();
         path = GetComponent<AIPath>();
         npcObjects = GameObject.FindGameObjectsWithTag("NPC");
         source = GetComponent<AudioSource>();
+        GameEvents.instance.onNPCDestroy += onNPCDeath;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.onNPCDestroy -= onNPCDeath;
+    }
+
+    private void onNPCDeath(GameObject gameObject)
+    {
+        for(int i = 0; i < npcObjects.Length; i++) {
+
+            if (npcObjects[i] == gameObject)
+            {
+                npcObjects[i] = null;
+            }
+
+        }
     }
 
     private void Update()
@@ -53,53 +68,46 @@ public class FlightNPC : AbstractNPC
             //die
             Instantiate(deadPrefab, transform.position, Quaternion.identity);
             GameEvents.instance.NpcDead(gameObject);
-            Object.Destroy(this.gameObject);
+            Object.Destroy(gameObject);
         }
 
-        //check if ghost in vision
-        //Vector3 playerPosition = playerObject.transform.position + new Vector3(0,.1f,0);
-        //RaycastHit2D playerHit = Physics2D.Raycast(transform.position, playerPosition - transform.position, 8f, playerLayer);
-        //RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, playerPosition - transform.position, 8f, obstacleLayer);
-
-        RaycastHit2D[] hits = SeeGhost();
-        RaycastHit2D playerHit = hits[0];
-        RaycastHit2D obstacleHit = hits[1];
-
-
-        if (playerHit && playerHit.collider.tag == "Player" && !playerHit.collider.isTrigger && !obstacleHit)
+        if (SeeGhost(6f))
         {
             if (!inChase)
             {
                 //play scream sound
                 source.PlayOneShot(clip);
             }
-            ChangeSanity(-.05f * Time.deltaTime);
+            ChangeSanity(-20f * Time.deltaTime);
             inChase = true;
-        } else if (inChase)
+        }
+        else if (inChase)
         {
             inChase = false;
             idle = true;
         }
 
+
         findClosestNPC();
+
         //increase sanity if near friends
-        if (calcDistance(closestNPC.transform.position) < 5)
+        if (closestNPC != null && calcDistance(closestNPC.transform.position) < 5)
         {
-            ChangeSanity(.01f * Time.deltaTime);
+            ChangeSanity(10f * Time.deltaTime); //.01
         }
 
         //change sanity with lighting
         if (inDarkness)
         {
-            ChangeSanity(-.01f * Time.deltaTime);
+            ChangeSanity(-10f * Time.deltaTime);
         }
         else
         {
-            ChangeSanity(.01f * Time.deltaTime);
+            ChangeSanity(10f * Time.deltaTime);
         }
 
         //--------------------------AI Movement----------------------------
-        path.maxSpeed = maxMoveSpeed+ (sanity/100);
+        path.maxSpeed = maxMoveSpeed + (sanity/100);
         if (inChase)//---------------Chased------------------
         {
             //faster in chase
@@ -134,7 +142,7 @@ public class FlightNPC : AbstractNPC
             animator.SetBool("Running", false);
             if (idle)
             {
-                if (sanity/100 >= .5)
+                if (sanity/100 >= .5 || closestNPC == null)
                 {
                     //pick random point to wander to
                     wanderTarget = Random.insideUnitSphere * 6;
@@ -217,11 +225,14 @@ public class FlightNPC : AbstractNPC
         float distance = 100000;
         foreach (GameObject npc in npcObjects)
         {
-            float tempDistance = calcDistance(npc.transform.position);
-            if (tempDistance < distance && tempDistance != 0)
+            if (npc != null)
             {
-                distance = tempDistance;
-                closestNPC = npc;
+                float tempDistance = calcDistance(npc.transform.position);
+                if (tempDistance < distance && tempDistance != 0)
+                {
+                    distance = tempDistance;
+                    closestNPC = npc;
+                }
             }
         }
     }
@@ -232,14 +243,17 @@ public class FlightNPC : AbstractNPC
         GameObject closestGuard = null;
         foreach (GameObject npc in npcObjects)
         {
-            GuardMove guard = npc.GetComponent<GuardMove>();
-            if (guard != null) 
+            if (npc != null)
             {
-                float tempDistance = calcDistance(npc.transform.position);
-                if (tempDistance < distance && tempDistance != 0)
+                GuardMove guard = npc.GetComponent<GuardMove>();
+                if (guard != null)
                 {
-                    distance = tempDistance;
-                    closestGuard = npc;
+                    float tempDistance = calcDistance(npc.transform.position);
+                    if (tempDistance < distance && tempDistance != 0)
+                    {
+                        distance = tempDistance;
+                        closestGuard = npc;
+                    }
                 }
             }
         }

@@ -1,4 +1,3 @@
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +5,6 @@ public abstract class AbstractNPC : MonoBehaviour
 {
     // ------ Ghost Check ------
     protected GameObject ghost;
-    LayerMask playerLayer;
     LayerMask obstacleLayer;
 
     // -------- Sanity ---------
@@ -26,20 +24,22 @@ public abstract class AbstractNPC : MonoBehaviour
 
         // ------ Ghost Check ------
         ghost = GameObject.FindGameObjectWithTag("Player");
-        playerLayer = LayerMask.GetMask("Player");
         obstacleLayer = LayerMask.GetMask("Obstacle");
     }
 
-    protected RaycastHit2D[] SeeGhost()
+    protected bool SeeGhost(float distance)
     {
-        Vector2 direction = ghost.transform.position + new Vector3(0.08838356f, 0.1350673f, 0) - transform.position;
+        RaycastHit2D playerHit = Physics2D.Linecast(transform.position, ghost.transform.position + new Vector3(0.08838356f, 0.1350673f, 0), obstacleLayer);
 
-        // Call player damage event on raycast hit
-        RaycastHit2D playerHit = Physics2D.Raycast(transform.position, direction, 5f, playerLayer);
-        RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, direction, 5f, obstacleLayer);
+        if (playerHit)
+        {
+            if (playerHit.collider.tag == "Player" && playerHit.distance <= distance && !playerHit.collider.isTrigger)
+            {
+                return true;
+            }
+        }
 
-        return new RaycastHit2D[] { playerHit, obstacleHit };
-
+        return false;
     }
 
     protected void ChangeSanity(float change)

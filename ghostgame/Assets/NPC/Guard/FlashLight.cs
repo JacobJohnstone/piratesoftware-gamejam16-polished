@@ -5,30 +5,26 @@ public class FlashLight : MonoBehaviour
 {
     [SerializeField]
     GameObject parent;
-    [SerializeField]
     GameObject ghost;
 
     GuardMove guard;
-    bool angry;
-    LayerMask playerLayer;
     LayerMask obstacleLayer;
+    Vector2 direction;
     float timePassed = 0f;
     float hitInterval = 1f;
 
     private void Awake()
     {
         guard = parent.GetComponent<GuardMove>();
-        playerLayer = LayerMask.GetMask("Player");
+        ghost = GameObject.FindGameObjectWithTag("Player");
         obstacleLayer = LayerMask.GetMask("Obstacle");
     }
 
 
     void Update()
     {
-        Vector2 direction = Vector2.zero;
-        angry = guard.isAngry;
-        if (angry) {
-            direction = (ghost.transform.position - transform.position).normalized;
+        if (guard.isAngry) {
+            direction = (ghost.transform.position + new Vector3(0.08838356f, 0.1350673f, 0) - transform.position).normalized;
         } else
         {
             direction = guard.velocity.normalized;
@@ -40,16 +36,15 @@ public class FlashLight : MonoBehaviour
         // Track time to only call damage once every second
         timePassed += Time.deltaTime;
 
+        RaycastHit2D playerHit = Physics2D.Linecast(transform.position, ghost.transform.position + new Vector3(0.08838356f, 0.1350673f, 0), obstacleLayer);
 
-        // Call player damage event on raycast hit
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 4f, playerLayer);
-        RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, direction, 4f, obstacleLayer);
-        if (hit && hit.collider.tag == "Player" && timePassed >= hitInterval && !obstacleHit)
+        if (playerHit)
         {
-            timePassed = 0f;
-            GameEvents.instance.TakeDamage();
+            if (playerHit.collider.tag == "Player" && playerHit.distance <= 4f && timePassed >= hitInterval && !playerHit.collider.isTrigger)
+            {
+                timePassed = 0f;
+                GameEvents.instance.TakeDamage();
+            }
         }
-
     }
-
 }
