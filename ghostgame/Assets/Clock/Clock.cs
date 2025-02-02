@@ -1,22 +1,23 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Clock : MonoBehaviour
 {
-    private float totalTime = 0f;
-    private float elapsedTime = 72000f;
-    private TMP_Text clockText;
-    private float timeScale = 60f;
-    private GameObject[] npcObjects;
-    private float prevHour;
-    private AudioSource source;
-    [SerializeField]private AudioClip clip;
+    GameObject[] npcObjects;
+    Text clockText;
+    AudioSource source;
+    [SerializeField]
+    AudioClip clip;
+    float totalTime = 0f;
+    float elapsedTime = 72000f;
+    float timeScale = 60f;
+    float prevHour;
 
     void Start()
     {
-        clockText = GetComponent<TMP_Text>();
-        prevHour = Mathf.FloorToInt(elapsedTime / 3600f);
+        clockText = GetComponent<Text>();
         source = GetComponent<AudioSource>();
+        prevHour = Mathf.FloorToInt(elapsedTime / 3600f);
     }
 
     void Update()
@@ -52,11 +53,11 @@ public class Clock : MonoBehaviour
 
     private void AlertHourChange()
     {
-        //play hour change sound
+        // Play hour change sound
         source.PlayOneShot(clip);
 
+        // Trigger each npc to seek next room
         npcObjects = GameObject.FindGameObjectsWithTag("NPC");
-        //trigger each npc to seek next room
         foreach (GameObject npcObject in npcObjects) 
         {
             FlightNPC npc = npcObject.GetComponent<FlightNPC>();

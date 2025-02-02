@@ -52,6 +52,15 @@ public abstract class AbstractNPC : MonoBehaviour
         slider.value = sanity;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Interact object thrown/ghost jumpscare
+        if (collision.gameObject.tag == "SanityHit")
+        {
+            ChangeSanity(-10);
+        }
+    }
+
     protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Light")
@@ -68,5 +77,7 @@ public abstract class AbstractNPC : MonoBehaviour
             inDarkness = true;
         }
     }
+
+    protected abstract void Dead();
 
 }

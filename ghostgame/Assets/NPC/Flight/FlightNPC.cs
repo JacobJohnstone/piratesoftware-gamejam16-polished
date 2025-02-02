@@ -1,44 +1,71 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting;
 
 public class FlightNPC : AbstractNPC
 {
-
-    private float interactCooldown = 0;
-    GameObject interactableObject;
-
-    Animator animator;
+    // ------ Components ---------
     SpriteRenderer spriteRenderer;
+    Animator animator;
 
-    //Pathfinding
-    private bool inChase = true;
-    private bool pathFinished = false;
-    private bool idle = true;
-    private Vector3 wanderTarget;
-    private bool onPath = false;
-    private AIPath path;
-    private float maxMoveSpeed = 1;
-    [SerializeField] private Transform[] targets;
-    private int targetIndex = 0;
+    // ------- Interact ----------
+    GameObject interactableObject;
+    float interactCooldown;
 
-    private GameObject[] npcObjects;
-    private GameObject closestNPC = null;
+    // ------ Pathfinding --------
+    AIPath path;
+    [SerializeField]
+    Transform[] targets;
+    GameObject[] npcObjects;
+    GameObject closestNPC = null;
+    Vector3 wanderTarget;
+    bool inChase = true;
+    bool pathFinished = false;
+    bool idleComplete = true;
+    bool onPath = false;
+    float maxMoveSpeed = 1;
+    int targetIndex = 0;
 
+    // ---------- Audio -----------
+    AudioSource source;
+    [SerializeField]
+    AudioClip clip;
 
-    private AudioSource source;
-    [SerializeField] private AudioClip clip;
+    // ------- Death Sprite -------
+    [SerializeField]
+    GameObject deadPrefab;
 
+    // -------- NPC States --------
+    public enum StateMachine
+    {
+        Wander,
+        Pathing,
+        InChase,
+        Dead
+    }
 
-    [SerializeField] GameObject deadPrefab;
+    public StateMachine currentState;
+
     protected override void Start()
     {
+        // Parent Start()
         base.Start();
+        
+        // --------- Components ---------
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         path = GetComponent<AIPath>();
-        npcObjects = GameObject.FindGameObjectsWithTag("NPC");
         source = GetComponent<AudioSource>();
+
+        // --------- GameObjects ---------
+        npcObjects = GameObject.FindGameObjectsWithTag("NPC");
+
+        // ----------  Interact  ---------
+        interactCooldown = 0;
+
+        // -----------  Event  -----------
         GameEvents.instance.onNPCDestroy += onNPCDeath;
     }
 
@@ -47,146 +74,86 @@ public class FlightNPC : AbstractNPC
         GameEvents.instance.onNPCDestroy -= onNPCDeath;
     }
 
-    private void onNPCDeath(GameObject gameObject)
-    {
-        for(int i = 0; i < npcObjects.Length; i++) {
-
-            if (npcObjects[i] == gameObject)
-            {
-                npcObjects[i] = null;
-            }
-
-        }
-    }
-
     private void Update()
     {
+        // Update the Interact cooldown
         interactCooldown -= Time.deltaTime;
+
+
+        // ------------------- Manage State ----------------------------
 
         if (sanity <= 0)
         {
-            //die
-            Instantiate(deadPrefab, transform.position, Quaternion.identity);
-            GameEvents.instance.NpcDead(gameObject);
-            Object.Destroy(gameObject);
+            currentState = StateMachine.Dead;
         }
-
-        if (SeeGhost(6f))
+        else if (currentState != StateMachine.Dead && SeeGhost(4f))
         {
-            if (!inChase)
+            // If the chase has just started, play the scream audio
+            if(currentState != StateMachine.InChase)
             {
-                //play scream sound
+                // Play Audio
                 source.PlayOneShot(clip);
             }
-            ChangeSanity(-20f * Time.deltaTime);
-            inChase = true;
-        }
-        else if (inChase)
+            // Enter chase state
+            currentState = StateMachine.InChase;
+        } else if (onPath)
         {
-            inChase = false;
-            idle = true;
+            currentState = StateMachine.Pathing;
+        } else
+        {
+            currentState = StateMachine.Wander;
+        }
+
+        switch (currentState)
+        {
+            case StateMachine.Wander:
+                Wander();
+                break;
+            case StateMachine.InChase:
+                InChase();
+                break;
+            case StateMachine.Pathing:
+                Pathing();
+                break;
+            case StateMachine.Dead:
+                Dead();
+                break;
         }
 
 
+        // ------------------- Manage Sanity ----------------------------
+
+        // Increase sanity if near another resident
         findClosestNPC();
-
-        //increase sanity if near friends
         if (closestNPC != null && calcDistance(closestNPC.transform.position) < 5)
-        {
-            ChangeSanity(10f * Time.deltaTime); //.01
-        }
-
-        //change sanity with lighting
-        if (inDarkness)
-        {
-            ChangeSanity(-10f * Time.deltaTime);
-        }
-        else
         {
             ChangeSanity(10f * Time.deltaTime);
         }
 
-        //--------------------------AI Movement----------------------------
-        path.maxSpeed = maxMoveSpeed + (sanity/100);
-        if (inChase)//---------------Chased------------------
+        // Change sanity according to being in our out of the darkness
+        if (inDarkness)
         {
-            //faster in chase
-            path.maxSpeed = maxMoveSpeed + (sanity/100) + .5f;
-            //try to find nearest person
-            GameObject closestGuard = findClosestGuard();
-            if (closestGuard != null)
-            {
-                path.destination = closestGuard.transform.position;
-            } else
-            {
-                //all guards dead, just try to run away from ghost
-                Vector3 playerVector = ghost.transform.position - transform.position;
-                playerVector.x = playerVector.x * -1;
-                playerVector.y = playerVector.y * -1;
-                path.destination = playerVector + transform.position;
-            }
-            animator.SetBool("Running", true);
-        } else if (onPath)//---------------Path to Room------------------
-        {
-            animator.SetBool("Running", false);
-            //go to desired target
-            path.destination = targets[targetIndex].position;
-            //go back to roaming after reaching room
-            if (path.velocity.magnitude == 0)
-            {
-                onPath = false;
-            }
+            ChangeSanity(-30f * Time.deltaTime);
         }
-        else//---------------Wandering in room------------------
+        else
         {
-            animator.SetBool("Running", false);
-            if (idle)
-            {
-                if (sanity/100 >= .5 || closestNPC == null)
-                {
-                    //pick random point to wander to
-                    wanderTarget = Random.insideUnitSphere * 6;
-                    wanderTarget.y = 0;
-                    wanderTarget += transform.position;
-                }
-                else //if low on sanity seek closest friend
-                {
-                    wanderTarget = closestNPC.transform.position;
-                    wanderTarget.x += (Random.Range(0, 2) * 2 - 1) * 3;
-                    wanderTarget.y += (Random.Range(0, 2) * 2 - 1) * 3;
-                }
-
-                idle = false;
-                if (interactCooldown <= 0 && interactableObject != null)
-                {
-                    interactCooldown = 10;
-                    GameEvents.instance.Interact(interactableObject);
-                }
-            } else
-            {
-                //roam to random point
-                path.destination = wanderTarget;
-                if (path.velocity.magnitude  == 0 && !pathFinished)
-                {
-                    pathFinished = true;
-                    StartCoroutine(setIdle());
-                }
-            }
- 
+            ChangeSanity(40f * Time.deltaTime);
         }
 
-        //------------Animation-----------------
-        if (path.velocity.magnitude > 0) {
+        // ------------ Movement Animation -----------------
+        if (path.velocity.magnitude > 0)
+        {
             animator.SetBool("Moving", true);
-        } else
+        }
+        else
         {
             animator.SetBool("Moving", false);
         }
 
-        //direction
-        if (path.targetDirection.x < 0) 
-            /*its obsolete but its the only attribute of aipath that works for this so hopefully this doesnt break
-            desired velocity cant return negative and steeringtarget doesnt update immediately*/
+        // Direction
+        if (path.targetDirection.x < 0)
+        /*its obsolete but its the only attribute of aipath that works for this so hopefully this doesnt break
+        desired velocity can't return negative and steeringtarget doesnt update immediately*/
         {
             spriteRenderer.flipX = true;
         }
@@ -195,20 +162,113 @@ public class FlightNPC : AbstractNPC
             spriteRenderer.flipX = false;
         }
 
-        animator.SetFloat("Sanity", sanity/100);
+        animator.SetFloat("Sanity", sanity / 100);
     }
 
-    IEnumerator setIdle()
+    private void Wander()
+    {
+
+        // If NPC is currently
+        if (idleComplete)
+        {
+            // Pick a random spot to wander to if high on sanity or last npc
+            if (sanity / 100 >= .5 || closestNPC == null)
+            {
+                wanderTarget = Random.insideUnitSphere * 6;
+                wanderTarget.y = 0;
+                wanderTarget += transform.position;
+            }
+            // Attempt to roam to closest NPC to increase sanity
+            else
+            {
+                wanderTarget = closestNPC.transform.position;
+                wanderTarget.x += (Random.Range(0, 2) * 2 - 1) * 3;
+                wanderTarget.y += (Random.Range(0, 2) * 2 - 1) * 3;
+            }
+
+            // If you can interact with an object in the area, do so
+            if (interactCooldown <= 0 && interactableObject != null)
+            {
+                interactCooldown = 1;
+                GameEvents.instance.Interact(interactableObject);
+            }
+
+            // Reset the idleComplete flag for next check
+            idleComplete = false;
+        }
+        else
+        {
+            // Start walking to a new random target
+            path.destination = wanderTarget;
+
+            // If NPC reaches target, the path is finished and stand still for 5s (startIdle coroutine)
+            if (path.velocity.magnitude == 0 && !pathFinished)
+            {
+                pathFinished = true;
+                StartCoroutine(startIdle());
+            }
+        }
+
+        // Update NPC Animation
+        animator.SetBool("Running", false);
+    }
+
+    private void Pathing()
+    {
+        // Go to next target (next room assignment)
+        path.destination = targets[targetIndex].position;
+        // Go back to roaming after reaching room
+        if (path.velocity.magnitude == 0)
+        {
+            onPath = false;
+        }
+
+        // Update NPC Animation
+        animator.SetBool("Running", false);
+    }
+
+    private void InChase()
+    {
+        // Increase speed while being chased
+        path.maxSpeed = maxMoveSpeed + (sanity / 100) + 0.5f;
+        
+        // Look to run towards the nearest guard
+        GameObject closestGuard = findClosestGuard();
+        if (closestGuard != null)
+        {
+            path.destination = closestGuard.transform.position;
+        }
+        // If there are no guards alive, run the opposite direction of the ghost
+        else
+        {
+            Vector3 playerVector = ghost.transform.position - transform.position;
+            playerVector.x = playerVector.x * -1;
+            playerVector.y = playerVector.y * -1;
+            path.destination = playerVector + transform.position;
+        }
+
+        // Update NPC animation
+        animator.SetBool("Running", true);
+    }
+
+    protected override void Dead()
+    {
+        Instantiate(deadPrefab, transform.position, Quaternion.identity);
+        GameEvents.instance.NpcDead(gameObject);
+        Destroy(gameObject);
+    }
+
+    IEnumerator startIdle()
     {
         yield return new WaitForSeconds(5f);
-        idle = true;
+        idleComplete = true;
         pathFinished = false;
     }
 
-    //to be called by clock after reaching next hour
+    // Called by clock after reaching next hour
     public void changePath() 
     {
-        //increment index but keep in bounds
+        // Increment index but keep in bounds
         targetIndex += 1;
         if (targetIndex >= targets.Length) { targetIndex = 0; }
         onPath = true;
@@ -261,39 +321,17 @@ public class FlightNPC : AbstractNPC
         return closestGuard;
     }
 
-    //private void ChangeSanity(float change)
-    //{
-    //    if (sanity + change < 0)
-    //    {
-    //        sanity = 0;
-    //    } else if (sanity + change > 1)
-    //    {
-    //        sanity = 1;
-    //    }
-    //    else
-    //    {
-    //        sanity += change;
-    //    }
-    //    slider.value = sanity;
-    //}
-//    private void OnTriggerStay2D(Collider2D collision)
-//    {
-//        if (collision.gameObject.tag == "Light")
-//        {
-//            inDarkness = false;
-//            interactableObject = collision.gameObject;
-//        }
-//        if (collision.tag == "Interact")
-//        {
-//            interactableObject = collision.gameObject;
-//        }
-//    }
+    private void onNPCDeath(GameObject gameObject)
+    {
+        for (int i = 0; i < npcObjects.Length; i++)
+        {
 
-//    private void OnTriggerExit2D(Collider2D collision)
-//    {
-//        if (collision.gameObject.tag == "Light")
-//        {
-//            inDarkness = true;
-//        }
-//    }
+            if (npcObjects[i] == gameObject)
+            {
+                npcObjects[i] = null;
+            }
+
+        }
+    }
+
 }

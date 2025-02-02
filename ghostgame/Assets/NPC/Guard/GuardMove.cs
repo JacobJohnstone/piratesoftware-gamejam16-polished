@@ -150,7 +150,7 @@ public class GuardMove : AbstractNPC
         flashLightDamage.enabled = false;
     }
 
-    void Dead()
+    protected override void Dead()
     {
         anim.SetBool("isScared", false);
         anim.SetBool("isDead", true);
@@ -194,12 +194,4 @@ public class GuardMove : AbstractNPC
         aiLerp.destination = target.position;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Interact object thrown
-        if (collision.gameObject.tag == "SanityHit")
-        {
-            ChangeSanity(-10);
-        }
-    }
 }
