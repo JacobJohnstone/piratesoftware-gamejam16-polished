@@ -21,7 +21,6 @@ public class FlightNPC : AbstractNPC
     GameObject[] npcObjects;
     GameObject closestNPC = null;
     Vector3 wanderTarget;
-    bool inChase = true;
     bool pathFinished = false;
     bool idleComplete = true;
     bool onPath = false;
@@ -74,11 +73,22 @@ public class FlightNPC : AbstractNPC
         GameEvents.instance.onNPCDestroy -= onNPCDeath;
     }
 
+    float timePassed = 0;
+
     private void Update()
     {
         // Update the Interact cooldown
         interactCooldown -= Time.deltaTime;
 
+        timePassed += Time.deltaTime;
+        if(timePassed > 2)
+        {
+            timePassed = 0;
+            if(gameObject.name == "FlightNPCPurple3")
+            {
+                Debug.Log("NPC line 89, inDarkness: " + inDarkness);
+            }
+        }
 
         // ------------------- Manage State ----------------------------
 
@@ -133,11 +143,11 @@ public class FlightNPC : AbstractNPC
         // Change sanity according to being in our out of the darkness
         if (inDarkness)
         {
-            ChangeSanity(-30f * Time.deltaTime);
+            ChangeSanity(-10f * Time.deltaTime);
         }
         else
         {
-            ChangeSanity(40f * Time.deltaTime);
+            ChangeSanity(10f * Time.deltaTime);
         }
 
         // ------------ Movement Animation -----------------
@@ -229,6 +239,7 @@ public class FlightNPC : AbstractNPC
 
     private void InChase()
     {
+        ChangeSanity(-20f * Time.deltaTime);
         // Increase speed while being chased
         path.maxSpeed = maxMoveSpeed + (sanity / 100) + 0.5f;
         

@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 8096987805485564547}
   - component: {fileID: 6492240637062416875}
   - component: {fileID: 5374541688713871867}
-  - component: {fileID: 2939089574179685318}
+  - component: {fileID: 5716275278136746116}
   m_Layer: 0
   m_Name: Lantern
   m_TagString: Interact
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowsEnabled: 1
+  m_ShadowsEnabled: 0
   m_ShadowIntensity: 0.75
   m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5
@@ -257,7 +257,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.047943, y: 1.9136035}
   m_EdgeRadius: 0
---- !u!114 &2939089574179685318
+--- !u!114 &5716275278136746116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7103561381165698724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfad489a2e8657d41b643ce207553144, type: 3}
+  m_Script: {fileID: 11500000, guid: f23f9d8a97327c74f8ba247975bccec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightBox: {fileID: 4498843483760210887}

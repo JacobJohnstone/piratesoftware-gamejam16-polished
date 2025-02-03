@@ -1,18 +1,18 @@
-using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class WallTorchController : MonoBehaviour
+public class LanternScript : MonoBehaviour
 {
     Light2D light;
     [SerializeField]
     GameObject lightBox;
-    PolygonCollider2D lightCollider;
+    CircleCollider2D lightCollider;
 
     private void Awake()
     {
-        light = GetComponentInChildren<Light2D>();
-        lightCollider = lightBox.GetComponent<PolygonCollider2D>();
+        light = GetComponent<Light2D>();
+        lightCollider = lightBox.GetComponent<CircleCollider2D>();
+        lightCollider.radius = light.pointLightOuterRadius;
     }
 
     private void Start()
@@ -33,5 +33,4 @@ public class WallTorchController : MonoBehaviour
             lightCollider.enabled = light.enabled;
         }
     }
-
 }

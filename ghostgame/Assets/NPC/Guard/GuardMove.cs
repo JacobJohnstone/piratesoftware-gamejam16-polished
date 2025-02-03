@@ -59,6 +59,7 @@ public class GuardMove : AbstractNPC
 
     private void Update()
     {
+
         if(0 < sanity && sanity <= 25)
         {
             currentState = StateMachine.Scared;

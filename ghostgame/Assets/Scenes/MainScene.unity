@@ -764,8 +764,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallTorch (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8717824144965309684, guid: 3f8fe97fcf9b7bb49b3cb3900a6a6bfc, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -40865,6 +40864,14 @@ PrefabInstance:
     - target: {fileID: 1549550615674681524, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2936073949991648663, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50.918213
+      objectReference: {fileID: 0}
+    - target: {fileID: 2936073949991648663, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 110.2666
       objectReference: {fileID: 0}
     - target: {fileID: 3852432007491385635, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
       propertyPath: m_Name
