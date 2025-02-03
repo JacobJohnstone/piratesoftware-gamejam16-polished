@@ -78,6 +78,11 @@ public abstract class AbstractNPC : MonoBehaviour
         }
     }
 
+    public void OnTriggerDestroy()
+    {
+        inDarkness = true;
+    }
+
     protected abstract void Dead();
 
 }

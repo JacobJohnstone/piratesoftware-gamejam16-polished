@@ -1,38 +1,26 @@
-using System;
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 
-public class CandleController : MonoBehaviour
+
+public class CandleController : AbstractLight
 {
-    Light2D light;
     Animator anim;
-    [SerializeField]
-    GameObject lightBox;
     CircleCollider2D lightCollider;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         anim = GetComponent<Animator>();
-        light = GetComponent<Light2D>();
         lightCollider = lightBox.GetComponent<CircleCollider2D>();
         lightCollider.radius = light.pointLightOuterRadius;
     }
 
-    private void Start()
+    protected override void ToggleLight(GameObject gameObject)
     {
-        GameEvents.instance.onInteract += ToggleLight;
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.instance.onInteract -= ToggleLight;
-    }
-
-    private void ToggleLight(GameObject gameObject)
-    {
+        base.ToggleLight(gameObject);
         if (gameObject == this.gameObject)
         {
-            light.enabled = !light.enabled;
             anim.SetBool("isFlame", light.enabled);
             lightCollider.enabled = light.enabled;
         }

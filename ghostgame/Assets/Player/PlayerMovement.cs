@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer spriteRenderer;
     public bool isInvisible;
     LayerMask wallLayer;
+    LayerMask collisionObjectsLayer;
     [SerializeField]
     float checkRadius;
 
@@ -85,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         // invisibility
         isInvisible = false;
         wallLayer = LayerMask.GetMask("Obstacle");
+        collisionObjectsLayer = LayerMask.GetMask("CollisionObjects");
         canMove = true;
         canTakeDmg = true;
     }
@@ -234,7 +236,9 @@ public class PlayerMovement : MonoBehaviour
     }
     bool inWall()
     {
-        return Physics2D.OverlapCircle(transform.position, checkRadius, wallLayer);
+        bool wallHit = Physics2D.OverlapCircle(transform.position, checkRadius, wallLayer);
+        bool objectHit = Physics2D.OverlapCircle(transform.position, checkRadius, collisionObjectsLayer);
+        return wallHit || objectHit;
     }
 
     private void GoInvisible()
@@ -297,8 +301,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 // check for a wall a specified distance away
                 bool inWall = Physics2D.OverlapCircle((Vector2)transform.position + (dir * modifier), 0.5f, wallLayer);
+                bool inObject = Physics2D.OverlapCircle((Vector2)transform.position + (dir * modifier), 0.5f, collisionObjectsLayer);
 
-                if (!inWall)
+                bool inCollider = inWall || inObject;
+
+                if (!inCollider)
                 {
                     newPosition = (Vector2)transform.position + dir * modifier;
                     Vector2 clampedPosition = new Vector2(

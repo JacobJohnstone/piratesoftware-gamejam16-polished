@@ -1,36 +1,26 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class WallTorchController : MonoBehaviour
+public class WallTorchController : AbstractLight
 {
-    Light2D light;
-    [SerializeField]
-    GameObject lightBox;
     PolygonCollider2D lightCollider;
 
-    private void Awake()
+    protected override void Awake()
     {
         light = GetComponentInChildren<Light2D>();
         lightCollider = lightBox.GetComponent<PolygonCollider2D>();
+        npcList = new List<GameObject>();
     }
 
-    private void Start()
-    {
-        GameEvents.instance.onInteract += ToggleLight;
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.instance.onInteract -= ToggleLight;
-    }
-
-    private void ToggleLight(GameObject gameObject)
+    protected override void ToggleLight(GameObject gameObject)
     {
         if (gameObject == this.gameObject)
         {
             light.enabled = !light.enabled;
             lightCollider.enabled = light.enabled;
+            NpcIntoDarkness();
         }
     }
 

@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 8096987805485564547}
   - component: {fileID: 6492240637062416875}
   - component: {fileID: 5374541688713871867}
-  - component: {fileID: 3111815429204090922}
+  - component: {fileID: 7070193766316450051}
   m_Layer: 0
   m_Name: WallTorchSide
   m_TagString: Interact
@@ -257,7 +257,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.047943, y: 1.9136035}
   m_EdgeRadius: 0
---- !u!114 &3111815429204090922
+--- !u!114 &7070193766316450051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7103561381165698724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d7287ae1f16d64ea8bc398b9bb0ee3, type: 3}
+  m_Script: {fileID: 11500000, guid: adc416601fceb4c49a49d94bf1f29ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lightBox: {fileID: 4498843483760210887}
