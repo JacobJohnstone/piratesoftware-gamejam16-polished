@@ -5,7 +5,6 @@ using UnityEngine.Rendering.Universal;
 
 public class GuardMove : AbstractNPC
 {
-    float timePassed;
     public Vector2 velocity;
     private AILerp aiLerp;
     [SerializeField]
@@ -39,7 +38,6 @@ public class GuardMove : AbstractNPC
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody2d = GetComponent<Rigidbody2D>();
-        timePassed = 0;
     }
 
     protected override void Start()
@@ -57,10 +55,11 @@ public class GuardMove : AbstractNPC
     }
 
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
 
-        if(0 < sanity && sanity <= 25)
+        if(0 < sanity && sanity <= 15)
         {
             currentState = StateMachine.Scared;
         } else if(sanity <= 0)
@@ -68,33 +67,19 @@ public class GuardMove : AbstractNPC
             currentState = StateMachine.Dead;
         }
 
-        timePassed += Time.deltaTime;
-
-        if (timePassed > 0.5f)
+        // Checking if in patrol/angry state, if can see ghost, then chase
+        if (currentState != StateMachine.Scared && currentState != StateMachine.Dead)
         {
-            timePassed = 0;
-            if (inDarkness) { 
-            
-                ChangeSanity(-1f);
-            } else
-            {
-                ChangeSanity(1f);
-            }
-            // Checking if in patrol/angry state, if can see ghost, then chase
-            if (currentState != StateMachine.Scared && currentState != StateMachine.Dead)
-            {
 
-                if (SeeGhost(5f))
-                {
-                    currentState = StateMachine.Chase;
-                }
-                else
-                {
-                    currentState = StateMachine.Patrol;
-                }
+            if (SeeGhost(5f))
+            {
+                currentState = StateMachine.Chase;
+            }
+            else
+            {
+                currentState = StateMachine.Patrol;
             }
         }
-
 
         switch (currentState)
         {

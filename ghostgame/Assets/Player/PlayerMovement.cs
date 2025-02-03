@@ -170,10 +170,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void TakeDamage()
+    private void TakeDamage(int damage)
     {
         if (canTakeDmg) { 
-            health -= 10;
+            health -= damage;
             dmg.Play();
 
             if (health <= 0)
@@ -181,10 +181,6 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetTrigger("death");
                 canMove = false;
                 canTakeDmg = false;
-                rigidBody2d.constraints = RigidbodyConstraints2D.FreezePosition;
-                rigidBody2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-                rigidBody2d.bodyType = RigidbodyType2D.Static;
-                boxCollider2d.enabled = false;
                 GameEvents.instance.LoseGame(); // call game over event
             }
         }

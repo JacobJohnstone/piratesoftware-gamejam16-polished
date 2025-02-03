@@ -10,6 +10,7 @@ public class FlashLight : MonoBehaviour
     GuardMove guard;
     LayerMask obstacleLayer;
     Vector2 direction;
+    int damage;
     float timePassed = 0f;
     float hitInterval = 1f;
 
@@ -18,6 +19,7 @@ public class FlashLight : MonoBehaviour
         guard = parent.GetComponent<GuardMove>();
         ghost = GameObject.FindGameObjectWithTag("Player");
         obstacleLayer = LayerMask.GetMask("Obstacle");
+        damage = 10;
     }
 
 
@@ -43,7 +45,7 @@ public class FlashLight : MonoBehaviour
             if (playerHit.collider.tag == "Player" && playerHit.distance <= 4f && timePassed >= hitInterval && !playerHit.collider.isTrigger)
             {
                 timePassed = 0f;
-                GameEvents.instance.TakeDamage();
+                GameEvents.instance.TakeDamage(damage);
             }
         }
     }

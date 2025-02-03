@@ -1,8 +1,6 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
-using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 
 public class FlightNPC : AbstractNPC
 {
@@ -75,20 +73,12 @@ public class FlightNPC : AbstractNPC
 
     float timePassed = 0;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         // Update the Interact cooldown
         interactCooldown -= Time.deltaTime;
-
-        timePassed += Time.deltaTime;
-        if(timePassed > 2)
-        {
-            timePassed = 0;
-            if(gameObject.name == "FlightNPCPurple3")
-            {
-                Debug.Log("NPC line 89, inDarkness: " + inDarkness);
-            }
-        }
 
         // ------------------- Manage State ----------------------------
 
@@ -137,17 +127,7 @@ public class FlightNPC : AbstractNPC
         findClosestNPC();
         if (closestNPC != null && calcDistance(closestNPC.transform.position) < 5)
         {
-            ChangeSanity(10f * Time.deltaTime);
-        }
-
-        // Change sanity according to being in our out of the darkness
-        if (inDarkness)
-        {
-            ChangeSanity(-10f * Time.deltaTime);
-        }
-        else
-        {
-            ChangeSanity(10f * Time.deltaTime);
+            ChangeSanity(1f * Time.deltaTime);
         }
 
         // ------------ Movement Animation -----------------
@@ -239,7 +219,7 @@ public class FlightNPC : AbstractNPC
 
     private void InChase()
     {
-        ChangeSanity(-20f * Time.deltaTime);
+        ChangeSanity(-5f * Time.deltaTime);
         // Increase speed while being chased
         path.maxSpeed = maxMoveSpeed + (sanity / 100) + 0.5f;
         

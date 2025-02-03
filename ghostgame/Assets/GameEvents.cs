@@ -50,10 +50,10 @@ public class GameEvents : MonoBehaviour
 
     // Controls player taking damage (called within flashlight)
     // Subscribed to by healthbar UI and player
-    public event Action onTakingDamage;
-    public void TakeDamage()
+    public event Action<int> onTakingDamage;
+    public void TakeDamage(int damage)
     {
-        onTakingDamage?.Invoke();
+        onTakingDamage?.Invoke(damage);
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------
@@ -69,7 +69,6 @@ public class GameEvents : MonoBehaviour
     public event Action onLoseGame;
     public void LoseGame()
     {
-        Debug.Log("Game Over");
         onLoseGame?.Invoke();
     }
 

@@ -27,6 +27,17 @@ public abstract class AbstractNPC : MonoBehaviour
         obstacleLayer = LayerMask.GetMask("Obstacle");
     }
 
+    protected virtual void Update()
+    {
+        if (inDarkness)
+        {
+            ChangeSanity(-2.5f * Time.deltaTime);
+        }
+        else
+        {
+            ChangeSanity(2.5f * Time.deltaTime);
+        }
+    }
     protected bool SeeGhost(float distance)
     {
         RaycastHit2D playerHit = Physics2D.Linecast(transform.position, ghost.transform.position + new Vector3(0.08838356f, 0.1350673f, 0), obstacleLayer);

@@ -16,9 +16,9 @@ public class HealthBar : MonoBehaviour
         GameEvents.instance.onTakingDamage -= TakeDamage;
     }
 
-    private void TakeDamage()
+    private void TakeDamage(int damage)
     {
-        slider.value -= 10;
+        slider.value -= damage;
     }
 
 }
