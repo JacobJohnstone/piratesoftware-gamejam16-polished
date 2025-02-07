@@ -31,7 +31,7 @@ public abstract class AbstractNPC : MonoBehaviour
     {
         if (inDarkness)
         {
-            ChangeSanity(-2.5f * Time.deltaTime);
+            ChangeSanity(-50f * Time.deltaTime);
         }
         else
         {
