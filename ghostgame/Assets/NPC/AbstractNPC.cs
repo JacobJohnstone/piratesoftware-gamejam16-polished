@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public abstract class AbstractNPC : MonoBehaviour
@@ -69,6 +70,9 @@ public abstract class AbstractNPC : MonoBehaviour
         if (collision.gameObject.tag == "SanityHit")
         {
             ChangeSanity(-10);
+        } else if (collision.gameObject.tag == "Light")
+        {
+            inDarkness = false;
         }
     }
 
@@ -77,6 +81,10 @@ public abstract class AbstractNPC : MonoBehaviour
         if (collision.gameObject.tag == "Light")
         {
             inDarkness = false;
+        }
+        else if (collision.gameObject.GetComponent<Light2D>() != null && collision.gameObject.GetComponent<PolygonCollider2D>() == null)
+        {
+            GameEvents.instance.NPCInteract(collision.gameObject);
         }
     }
 

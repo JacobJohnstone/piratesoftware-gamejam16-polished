@@ -14,13 +14,21 @@ public class SideTorchController : AbstractLight
         npcList = new List<GameObject>();
     }
 
-    protected override void ToggleLight(GameObject gameObject)
+    protected override void LightOn(GameObject gameObject)
     {
+        base.LightOn(gameObject);
         if (gameObject == this.gameObject)
         {
-            light.enabled = !light.enabled;
             lightCollider.enabled = light.enabled;
-            NpcIntoDarkness();
+        }
+    }
+
+    protected override void ToggleLight(GameObject gameObject)
+    {
+        base.ToggleLight(gameObject);
+        if (gameObject == this.gameObject)
+        {
+            lightCollider.enabled = light.enabled;
         }
     }
 }

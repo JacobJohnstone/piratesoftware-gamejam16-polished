@@ -40,6 +40,11 @@ public class GameEvents : MonoBehaviour
         onOutOfRange?.Invoke();
     }
 
+    public event Action<GameObject> onNPCInteract;
+    public void NPCInteract(GameObject gameObject)
+    {
+        onNPCInteract?.Invoke(gameObject);
+    }
 
     //----------------------------------------------------------------------------------------------------------------------------------
     // Controls invisibility duration (called within player)

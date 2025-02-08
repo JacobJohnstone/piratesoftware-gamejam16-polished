@@ -19,11 +19,21 @@ public class AbstractLight : MonoBehaviour
     protected void Start()
     {
         GameEvents.instance.onInteract += ToggleLight;
+        GameEvents.instance.onNPCInteract += LightOn;
     }
 
     protected void OnDestroy()
     {
         GameEvents.instance.onInteract -= ToggleLight;
+        GameEvents.instance.onNPCInteract -= LightOn;
+    }
+
+    protected virtual void LightOn(GameObject gameObject)
+    {
+        if (gameObject == this.gameObject)
+        {
+            light.enabled = true;
+        }
     }
 
     protected virtual void ToggleLight(GameObject gameObject)

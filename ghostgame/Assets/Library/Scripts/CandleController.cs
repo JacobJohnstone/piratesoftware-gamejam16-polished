@@ -16,6 +16,16 @@ public class CandleController : AbstractLight
         lightCollider.radius = light.pointLightOuterRadius;
     }
 
+    protected override void LightOn(GameObject gameObject)
+    {
+        base.LightOn(gameObject);
+        if(gameObject == this.gameObject)
+        {
+            anim.SetBool("isFlame", light.enabled);
+            lightCollider.enabled = light.enabled;
+        }
+    }
+
     protected override void ToggleLight(GameObject gameObject)
     {
         base.ToggleLight(gameObject);

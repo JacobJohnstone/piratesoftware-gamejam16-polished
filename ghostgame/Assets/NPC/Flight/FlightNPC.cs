@@ -1,6 +1,7 @@
 using UnityEngine;
 using Pathfinding;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 public class FlightNPC : AbstractNPC
 {
@@ -9,8 +10,10 @@ public class FlightNPC : AbstractNPC
     Animator animator;
 
     // ------- Interact ----------
-    GameObject interactableObject;
-    float interactCooldown;
+    GameObject[] lights;
+    GameObject closestLight = null;
+    float timePassed = 0;
+    bool findingLight = false;
 
     // ------ Pathfinding --------
     AIPath path;
@@ -38,6 +41,7 @@ public class FlightNPC : AbstractNPC
     public enum StateMachine
     {
         Wander,
+        FindingLight,
         Pathing,
         InChase,
         Dead
@@ -49,6 +53,7 @@ public class FlightNPC : AbstractNPC
     {
         // Parent Start()
         base.Start();
+        currentState = StateMachine.Wander;
         
         // --------- Components ---------
         animator = GetComponent<Animator>();
@@ -60,7 +65,8 @@ public class FlightNPC : AbstractNPC
         npcObjects = GameObject.FindGameObjectsWithTag("NPC");
 
         // ----------  Interact  ---------
-        interactCooldown = 0;
+        //interactCooldown = 0;
+        lights = GameObject.FindGameObjectsWithTag("Interact");
 
         // -----------  Event  -----------
         GameEvents.instance.onNPCDestroy += onNPCDeath;
@@ -71,14 +77,12 @@ public class FlightNPC : AbstractNPC
         GameEvents.instance.onNPCDestroy -= onNPCDeath;
     }
 
-    float timePassed = 0;
+    //float timePassed = 0;
 
     protected override void Update()
     {
         base.Update();
-
-        // Update the Interact cooldown
-        interactCooldown -= Time.deltaTime;
+        timePassed += Time.deltaTime;
 
         // ------------------- Manage State ----------------------------
 
@@ -96,18 +100,37 @@ public class FlightNPC : AbstractNPC
             }
             // Enter chase state
             currentState = StateMachine.InChase;
-        } else if (onPath)
+        } 
+        else if (onPath)
         {
             currentState = StateMachine.Pathing;
-        } else
+        } 
+        else if (inDarkness && timePassed > 15 || findingLight)
+        {
+            // find closest light and set destination to that light (if light is on, once in the light inDarkness == false, else npc will walk closer and turn on\
+            timePassed = 0;
+            findingLight = true;
+            findClosestLight();
+            currentState = StateMachine.FindingLight;
+        } 
+        else
         {
             currentState = StateMachine.Wander;
+        }
+
+        if (this.gameObject.name == "FlightNPCPurple2")
+        {
+            Debug.Log("Current State: " + currentState.ToString());
+            Debug.Log("InDarkness: " + inDarkness);
         }
 
         switch (currentState)
         {
             case StateMachine.Wander:
                 Wander();
+                break;
+            case StateMachine.FindingLight:
+                FindingLight();
                 break;
             case StateMachine.InChase:
                 InChase();
@@ -172,15 +195,8 @@ public class FlightNPC : AbstractNPC
             else
             {
                 wanderTarget = closestNPC.transform.position;
-                wanderTarget.x += (Random.Range(0, 2) * 2 - 1) * 3;
-                wanderTarget.y += (Random.Range(0, 2) * 2 - 1) * 3;
-            }
-
-            // If you can interact with an object in the area, do so
-            if (interactCooldown <= 0 && interactableObject != null)
-            {
-                interactCooldown = 1;
-                GameEvents.instance.Interact(interactableObject);
+                wanderTarget.x += (Random.Range(0, 2) * 2 - 1) * 6;
+                wanderTarget.y += (Random.Range(0, 2) * 2 - 1) * 6;
             }
 
             // Reset the idleComplete flag for next check
@@ -201,6 +217,16 @@ public class FlightNPC : AbstractNPC
 
         // Update NPC Animation
         animator.SetBool("Running", false);
+    }
+
+    void FindingLight()
+    {
+        path.destination = closestLight.transform.position;
+        if(path.velocity.magnitude == 0)
+        {
+            findingLight = false;
+            timePassed = 0;
+        }
     }
 
     private void Pathing()
@@ -283,6 +309,23 @@ public class FlightNPC : AbstractNPC
                 {
                     distance = tempDistance;
                     closestNPC = npc;
+                }
+            }
+        }
+    }
+
+    private void findClosestLight()
+    {
+        float distance = 100000;
+        foreach(GameObject light in lights)
+        {
+            if (light.GetComponent<Light2D>() != null)
+            {
+                float tempDistance = calcDistance(light.transform.position);
+                if (tempDistance < distance && tempDistance != 0)
+                {
+                    distance = tempDistance;
+                    closestLight = light;
                 }
             }
         }
