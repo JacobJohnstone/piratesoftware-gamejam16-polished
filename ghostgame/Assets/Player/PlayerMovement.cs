@@ -370,14 +370,14 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator InvisibilityCD()
     {
         // call duration event
-        GameEvents.instance.StartInvisibility(2f);
-        yield return new WaitForSeconds(2f); // invisibility duration
+        GameEvents.instance.StartInvisibility(4f);
+        yield return new WaitForSeconds(4f); // invisibility duration
         boxCollider2d.enabled = false;
         StartCoroutine(RevokeInvisibility());
-        yield return new WaitUntil(() => !inWall());
+        yield return new WaitUntil(() => !inWall() || !canMove);
         // call cooldown event
-        GameEvents.instance.StartCooldown(2f);
-        yield return new WaitForSeconds(2f);
+        GameEvents.instance.StartCooldown(5f);
+        yield return new WaitForSeconds(5f);
         invisCooldown = false;
     }
 

@@ -81,7 +81,8 @@ public class UIManager : MonoBehaviour
     {
         DisableUI();
         winOrLoseText.text = "YOU WON!";
-        yourTime.text = "YOUR TIME: " + ((Mathf.Round(timePassed * 100)) / 100);
+        float finishTime = (Mathf.Round(timePassed * 100)) / 100;
+        yourTime.text = "YOUR TIME: " + (int)finishTime/60 + ":" + (int)finishTime%60;
         yourScares.text = "SCARE COUNT: " + scareCount.ToString();
     }
 
