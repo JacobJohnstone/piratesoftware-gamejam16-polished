@@ -2,8 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 public class UIManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject instructionMenu;
+    bool menuActive;
+
     [SerializeField]
     GameObject healthBar;
     [SerializeField]
@@ -35,6 +40,10 @@ public class UIManager : MonoBehaviour
         GameEvents.instance.onLoseGame += Lost;
         GameEvents.instance.onWinGame += Win;
         GameEvents.instance.onNPCDestroy += RemoveNPC;
+        GameEvents.instance.onMenu += CloseMenu;
+
+        instructionMenu.SetActive(true);
+        menuActive = true;
 
         healthBar.SetActive(true);
         invisibility.SetActive(true);
@@ -56,7 +65,7 @@ public class UIManager : MonoBehaviour
         GameEvents.instance.onLoseGame -= Lost;
         GameEvents.instance.onWinGame -= Win;
         GameEvents.instance.onNPCDestroy -= RemoveNPC;
-
+        GameEvents.instance.onMenu -= CloseMenu;
     }
 
 
@@ -103,6 +112,12 @@ public class UIManager : MonoBehaviour
         {
             GameEvents.instance.Winner();
         }
+    }
+
+    void CloseMenu()
+    {
+        instructionMenu.SetActive(!menuActive);
+        menuActive = !menuActive;
     }
 
 }

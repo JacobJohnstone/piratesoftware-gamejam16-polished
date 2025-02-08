@@ -12,6 +12,15 @@ public class GameEvents : MonoBehaviour
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------
+    // Controls opening and closing the menu, called from the player, listened to by the UI canvas
+    public event Action onMenu;
+    public void MenuInput()
+    {
+        onMenu?.Invoke();
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------------------------------
     // Controls interact cooldown and tells what is being interacted with (called within player)
     public event Action<GameObject> onInteract;
     public void Interact(GameObject gameObject)

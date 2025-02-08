@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngineInternal;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,9 +19,12 @@ public class PlayerMovement : MonoBehaviour
     bool onCooldown = false;
     bool invisCooldown = false;
 
-    // Movement
+    // Movement and other inputs
     public InputSystem_Actions inputControls;
     InputAction moveAction;
+    InputAction interact;
+    InputAction invisibility;
+    InputAction menuAction;
     Vector2 move;
     Vector2 moveDirection = new Vector2(0, 0);
     [SerializeField]
@@ -39,10 +40,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     GameObject minBoundaryObj;
     float xMin, yMin;
-
-    // Other Inputs
-    InputAction interact;
-    InputAction invisibility;
 
     // Invisibility
     [SerializeField]
@@ -103,6 +100,10 @@ public class PlayerMovement : MonoBehaviour
         // Movement
         moveAction = inputControls.Player.Move;
         moveAction.Enable();
+        // Menu
+        menuAction = inputControls.Player.Menu;
+        menuAction.Enable();
+        menuAction.performed += CloseMenu;
         // Interact 'E'
         interact = inputControls.Player.Interact;
         interact.Enable();
@@ -122,6 +123,9 @@ public class PlayerMovement : MonoBehaviour
         // Invisibility 'Q'
         invisibility.performed -= Ability;
         invisibility.Disable();
+        // Menu
+        menuAction.performed -= CloseMenu;
+        menuAction.Disable();
         // Movement
         moveAction.Disable();
     }
@@ -186,6 +190,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void CloseMenu(InputAction.CallbackContext context)
+    {
+        GameEvents.instance.MenuInput();
+    }
 
     // ----------------------- Interact Event 'E' ------------------------
     private void Interact(InputAction.CallbackContext context)
