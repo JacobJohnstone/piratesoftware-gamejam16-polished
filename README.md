@@ -1,8 +1,12 @@
 <h1 align="center">🏴‍☠️ Updated Pirate Software GameJam Submission: Haunting Grounds 🦜</h1>
 
-<h4 align="center">An update to the game jam submission that removes bugs and balances the game to create a cleaner demo experience!</h4>
-<h3 align="center"><a href="https://malcolmfonseca.itch.io/haunting-grounds/">Play here!</a></h3>
-<h3 align="center"><a href="https://itch.io/jam/pirate16/rate/3289215">See original submission here!</a></h3>
+<div align="center" style="text-align: center;">
+  <img src="https://github.com/user-attachments/assets/f3e45a1a-ae63-4011-b950-a37214e3364f" style="width:85%;" />
+</div>
+
+<h3 align="center">An update to the game jam submission that removes bugs and balances the game to create a cleaner demo experience!</h3>
+<h3 align="center"><a href="https://malcolmfonseca.itch.io/haunting-grounds/">Play here</a></h3>
+<h3 align="center"><a href="https://itch.io/jam/pirate16/rate/3289215">See original submission here</a></h3>
 
 ## 👻 Overview
 The game was created following the theme <b>YOU ARE THE WEAPON!</b> With this we created <b>Haunting Grounds,</b> an action game with stealth elements where the player, as a ghost, attempts to clear out their former home by scaring the current residents. The game takes place in a single large castle level, where the player can scare residents by turning off lights, throwing objects, and appearing before them. Be wary of the guards however, who will try to banish the player with their flashlights. Also watch the clock, as once it strikes 6:00a.m. the morning light will rid you of the castle. Once all residents have lost their sanity the player has reclaimed their home and has won the game.
@@ -22,7 +26,8 @@ The game was created following the theme <b>YOU ARE THE WEAPON!</b> With this we
 - <b>E</b> - Interact
 
 ## 💻 Development Tools
-![Unity](https://img.shields.io/badge/Unity-lightgrey?style=for-the-badge&logo=Unity&logoColor=black)![FL Studio](https://img.shields.io/badge/FL%20Studio-orange?style=for-the-badge)![Aseprite](https://img.shields.io/badge/Aseprite-white?style=for-the-badge&logo=Aseprite&logoColor=black)
+![Unity](https://img.shields.io/badge/Unity-lightgrey?style=for-the-badge&logo=Unity&logoColor=black) ![C sharp](https://img.shields.io/badge/C%23-8A2BE2?style=for-the-badge&logo=C%23&logoColor=White)
+ ![FL Studio](https://img.shields.io/badge/FL%20Studio-orange?style=for-the-badge) ![Aseprite](https://img.shields.io/badge/Aseprite-white?style=for-the-badge&logo=Aseprite&logoColor=black)
 
 ## Genre
 ♟️ <b>Single Player</b> 👾 <b>Arcade</b> ⚔️ <b>Action</b> 🥷 <b>Stealth</b>
