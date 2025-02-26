@@ -5,7 +5,7 @@
 </div>
 
 <h3 align="center">An update to the game jam submission that removes bugs and balances the game to create a cleaner demo experience!</h3>
-<h3 align="center"><a href="https://malcolmfonseca.itch.io/haunting-grounds/">Play here</a></h3>
+<h3 align="center"><a href="https://jacobjohnstone.itch.io/haunting-grounds-v11">Play here</a></h3>
 <h3 align="center"><a href="https://itch.io/jam/pirate16/rate/3289215">See original submission here</a></h3>
 
 ## 👻 Overview
