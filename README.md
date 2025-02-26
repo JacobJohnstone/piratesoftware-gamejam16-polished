@@ -24,6 +24,7 @@ The game was created following the theme <b>YOU ARE THE WEAPON!</b> With this we
 - <b>WASD/Arrow Keys</b> - movement
 - <b>Q</b> - Invisibility
 - <b>E</b> - Interact
+- <b>M</b> - Instructions Menu
 
 ## 💻 Development Tools
 ![Unity](https://img.shields.io/badge/Unity-lightgrey?style=for-the-badge&logo=Unity&logoColor=black) ![C sharp](https://img.shields.io/badge/C%23-8A2BE2?style=for-the-badge&logo=C%23&logoColor=White)
