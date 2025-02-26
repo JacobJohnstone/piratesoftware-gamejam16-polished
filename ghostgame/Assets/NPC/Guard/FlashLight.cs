@@ -42,7 +42,7 @@ public class FlashLight : MonoBehaviour
 
         if (playerHit)
         {
-            if (playerHit.collider.tag == "Player" && playerHit.distance <= 4f && timePassed >= hitInterval && !playerHit.collider.isTrigger)
+            if (playerHit.collider.tag == "Player" && playerHit.distance <= 3.5f && timePassed >= hitInterval && !playerHit.collider.isTrigger)
             {
                 timePassed = 0f;
                 GameEvents.instance.TakeDamage(damage);

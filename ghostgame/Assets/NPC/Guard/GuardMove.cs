@@ -19,7 +19,6 @@ public class GuardMove : AbstractNPC
     Rigidbody2D rigidBody2d;
     Light2D light;
     FlashLight flashLightDamage;
-
     Coroutine runningCoroutine;
 
     public enum StateMachine

@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469794040}
     m_Modifications:
+    - target: {fileID: 3215123766232485798, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4385672817202450678, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
       propertyPath: m_Name
       value: FlightNPCBlue4
@@ -225,6 +229,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469794040}
     m_Modifications:
+    - target: {fileID: 3215123766232485798, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4385672817202450678, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
       propertyPath: m_Name
       value: FlightNPCBlue2
@@ -1180,6 +1188,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: TallBookShelf
       objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.x
+      value: 1.6673641
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.y
+      value: 2.5253773
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0013971329
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.7335758
+      objectReference: {fileID: 0}
     - target: {fileID: 1744731271796850444, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
       propertyPath: book
       value: 
@@ -1496,6 +1520,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 693435324}
     m_Modifications:
+    - target: {fileID: 891176793059380543, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039617305937371831, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
+      propertyPath: moveSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1039617305937371831, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
       propertyPath: maxBoundaryObj
       value: 
@@ -1504,6 +1536,10 @@ PrefabInstance:
       propertyPath: minBoundaryObj
       value: 
       objectReference: {fileID: 759799126}
+    - target: {fileID: 1420481838039872168, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2000159383402631399, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
       propertyPath: m_Name
       value: Ghost
@@ -1547,6 +1583,10 @@ PrefabInstance:
     - target: {fileID: 2561476124793214715, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258756192738249090, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
+      propertyPath: m_Volume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7582778241075248668, guid: 678cb1c64e9fe844792848d0738a5927, type: 3}
       propertyPath: m_Enabled
@@ -1659,6 +1699,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469794040}
     m_Modifications:
+    - target: {fileID: 3215123766232485798, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4385672817202450678, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
       propertyPath: m_Name
       value: FlightNPCBlue5
@@ -1980,6 +2024,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469794040}
     m_Modifications:
+    - target: {fileID: 3215123766232485798, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4385672817202450678, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
       propertyPath: m_Name
       value: FlightNPCBlue6
@@ -7136,6 +7184,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.25
       objectReference: {fileID: 0}
+    - target: {fileID: 8025339556556252299, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8432947104540561618, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7302,13 +7354,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6891066942045213398, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 6891066942045213398, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.22
+    - target: {fileID: 8025339556556252299, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8432947104540561618, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7317,10 +7365,6 @@ PrefabInstance:
     - target: {fileID: 8432947104540561618, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: targets.Array.size
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: 'targets.Array.data[0]'
@@ -8463,6 +8507,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: TallBookShelf
       objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.x
+      value: 1.6276779
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.y
+      value: 2.491014
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0043964386
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.75212884
+      objectReference: {fileID: 0}
     - target: {fileID: 1744731271796850444, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
       propertyPath: childObject
       value: 
@@ -9174,6 +9234,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9111738356705742670, guid: 1f28e738d34aa8146804f97903989b0e, type: 3}
   m_PrefabInstance: {fileID: 370289389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &950523621 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4492779963024463692, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+  m_PrefabInstance: {fileID: 1676925357}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &950523623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950523621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.2179601, g: 0.3318117, b: 0.5849056, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &950523624
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950523621}
+  m_CullTransparentMesh: 1
 --- !u!1 &973356377
 GameObject:
   m_ObjectHideFlags: 0
@@ -9407,6 +9510,10 @@ PrefabInstance:
     - target: {fileID: 6891066942045213398, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 1.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025339556556252299, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8432947104540561618, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -9814,6 +9921,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469794040}
     m_Modifications:
+    - target: {fileID: 3215123766232485798, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4385672817202450678, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
       propertyPath: m_Name
       value: FlightNPCBlue1
@@ -10615,6 +10726,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469794040}
     m_Modifications:
+    - target: {fileID: 3215123766232485798, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4385672817202450678, guid: 9e54c88c7e91a99449fd2ccb4a201612, type: 3}
       propertyPath: m_Name
       value: FlightNPCBlue3
@@ -40836,6 +40951,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1580014429}
     m_Modifications:
+    - target: {fileID: 1111759965853207668, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 352.0102
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111759965853207668, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 125.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111759965853207668, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 188.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111759965853207668, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.30361
+      objectReference: {fileID: 0}
     - target: {fileID: 1313353960993679386, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -40851,10 +40982,30 @@ PrefabInstance:
     - target: {fileID: 1549550615674681524, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822685094236255631, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.0021051
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822685094236255631, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.7
       objectReference: {fileID: 0}
     - target: {fileID: 3852432007491385635, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993352953555556983, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 125.0328
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993352953555556983, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.0021052957
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993352953555556983, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -86.558975
       objectReference: {fileID: 0}
     - target: {fileID: 4548312147487788077, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
       propertyPath: m_Pivot.x
@@ -40936,10 +41087,58 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4623578480483044468, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_Text
+      value: " - Careful of the guards flashlights\n - Cause residents to lose sanity
+        through interactions, jumping out close to them, and keeping them isolated
+        in darkness\n - Scare all residents to death before 6:00am to claim victory!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_FontData.m_RichText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861658306255741087, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      propertyPath: m_FontData.m_LineSpacing
+      value: 1.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4492779963024463692, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 950523624}
+    - targetCorrespondingSourceObject: {fileID: 4492779963024463692, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 950523623}
   m_SourcePrefab: {fileID: 100100000, guid: 6de65e073194b9a4d84f535427ae7136, type: 3}
 --- !u!4 &1694274330 stripped
 Transform:
@@ -40991,6 +41190,22 @@ PrefabInstance:
     - target: {fileID: 856819201067461429, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
       propertyPath: m_Name
       value: TallBookShelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7332945
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.y
+      value: 2.579029
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.015575886
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.72457075
       objectReference: {fileID: 0}
     - target: {fileID: 1744731271796850444, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
       propertyPath: book
@@ -41228,6 +41443,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3441101855262541799, guid: aa8ec1f84903ae644a13deb3b769d8b4, type: 3}
+      propertyPath: m_Volume
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441101855262541799, guid: aa8ec1f84903ae644a13deb3b769d8b4, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -41292,17 +41511,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6891066942045213398, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: m_LocalPosition.z
+    - target: {fileID: 8025339556556252299, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6891066942045213398, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 6891066942045213398, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.27
       objectReference: {fileID: 0}
     - target: {fileID: 8432947104540561618, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -41313,21 +41524,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
-      propertyPath: targets.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: 'targets.Array.data[0]'
       value: 
-      objectReference: {fileID: 1456386090}
+      objectReference: {fileID: 731046924}
     - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: 'targets.Array.data[1]'
       value: 
-      objectReference: {fileID: 144652438}
+      objectReference: {fileID: 510593130}
     - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
       propertyPath: 'targets.Array.data[2]'
       value: 
-      objectReference: {fileID: 731046924}
+      objectReference: {fileID: 144652438}
+    - target: {fileID: 8854109754326442611, guid: d364a416a7ca9a24eb130a7b57d1787e, type: 3}
+      propertyPath: 'targets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1561102837}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -60948,6 +61159,22 @@ PrefabInstance:
     - target: {fileID: 856819201067461429, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
       propertyPath: m_Name
       value: TallBookShelf
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.x
+      value: 1.726984
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Size.y
+      value: 2.5795646
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.020586967
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566044769951403500, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.7154572
       objectReference: {fileID: 0}
     - target: {fileID: 1744731271796850444, guid: b6f82268a0deaa543abc4bf92ad2f8b0, type: 3}
       propertyPath: childObject

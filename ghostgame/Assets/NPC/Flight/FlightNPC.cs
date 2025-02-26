@@ -2,9 +2,15 @@ using UnityEngine;
 using Pathfinding;
 using System.Collections;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class FlightNPC : AbstractNPC
 {
+    // -------- Scene ------------
+    Scene scene;
+    string sceneName;
+    float ghostDistance;
+
     // ------ Components ---------
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -26,12 +32,11 @@ public class FlightNPC : AbstractNPC
     bool idleComplete = true;
     bool onPath = false;
     float maxMoveSpeed = 1;
+    float moveIncrement = 0;
     int targetIndex = 0;
 
     // ---------- Audio -----------
     AudioSource source;
-    [SerializeField]
-    AudioClip clip;
 
     // ------- Death Sprite -------
     [SerializeField]
@@ -54,7 +59,12 @@ public class FlightNPC : AbstractNPC
         // Parent Start()
         base.Start();
         currentState = StateMachine.Wander;
-        
+
+        // ----------- Scene ------------
+        scene = SceneManager.GetActiveScene();
+        sceneName = scene.name;
+        ghostDistance = 5f;
+
         // --------- Components ---------
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -77,12 +87,24 @@ public class FlightNPC : AbstractNPC
         GameEvents.instance.onNPCDestroy -= onNPCDeath;
     }
 
-    //float timePassed = 0;
-
     protected override void Update()
     {
         base.Update();
         timePassed += Time.deltaTime;
+        if (!inDarkness)
+        {
+            timePassed = 0;
+        }
+
+        // This is important to prevent null reference errors when in comes to lighting in the title screen
+        if(sceneName == "TitleScreen")
+        {
+            inDarkness = false;
+            ghostDistance = 8f;
+        } else
+        {
+            ghostDistance = 5f;
+        }
 
         // ------------------- Manage State ----------------------------
 
@@ -90,13 +112,13 @@ public class FlightNPC : AbstractNPC
         {
             currentState = StateMachine.Dead;
         }
-        else if (currentState != StateMachine.Dead && SeeGhost(4f))
+        else if (currentState != StateMachine.Dead && SeeGhost(ghostDistance))
         {
             // If the chase has just started, play the scream audio
             if(currentState != StateMachine.InChase)
             {
                 // Play Audio
-                source.PlayOneShot(clip);
+                source.Play();
             }
             // Enter chase state
             currentState = StateMachine.InChase;
@@ -105,7 +127,7 @@ public class FlightNPC : AbstractNPC
         {
             currentState = StateMachine.Pathing;
         } 
-        else if (inDarkness && timePassed > 15 || findingLight)
+        else if (inDarkness && timePassed > 12 || findingLight)
         {
             // find closest light and set destination to that light (if light is on, once in the light inDarkness == false, else npc will walk closer and turn on\
             timePassed = 0;
@@ -118,10 +140,10 @@ public class FlightNPC : AbstractNPC
             currentState = StateMachine.Wander;
         }
 
-        if (this.gameObject.name == "FlightNPCPurple2")
+        if(currentState != StateMachine.InChase)
         {
-            Debug.Log("Current State: " + currentState.ToString());
-            Debug.Log("InDarkness: " + inDarkness);
+            moveIncrement = Mathf.Clamp(moveIncrement - Time.deltaTime * 2, 0, 3.25f);
+            path.maxSpeed = maxMoveSpeed + moveIncrement;
         }
 
         switch (currentState)
@@ -187,16 +209,16 @@ public class FlightNPC : AbstractNPC
             // Pick a random spot to wander to if high on sanity or last npc
             if (sanity / 100 >= .5 || closestNPC == null)
             {
-                wanderTarget = Random.insideUnitSphere * 6;
-                wanderTarget.y = 0;
+                wanderTarget = Random.insideUnitSphere * 5;
+                //wanderTarget.y = 0;
                 wanderTarget += transform.position;
             }
             // Attempt to roam to closest NPC to increase sanity
             else
             {
                 wanderTarget = closestNPC.transform.position;
-                wanderTarget.x += (Random.Range(0, 2) * 2 - 1) * 6;
-                wanderTarget.y += (Random.Range(0, 2) * 2 - 1) * 6;
+                wanderTarget.x += (Random.Range(0, 2) * 2 - 1) * 5;
+                wanderTarget.y += (Random.Range(0, 2) * 2 - 1) * 5;
             }
 
             // Reset the idleComplete flag for next check
@@ -222,7 +244,7 @@ public class FlightNPC : AbstractNPC
     void FindingLight()
     {
         path.destination = closestLight.transform.position;
-        if(path.velocity.magnitude == 0)
+        if(path.remainingDistance < 1)
         {
             findingLight = false;
             timePassed = 0;
@@ -245,10 +267,19 @@ public class FlightNPC : AbstractNPC
 
     private void InChase()
     {
-        ChangeSanity(-5f * Time.deltaTime);
-        // Increase speed while being chased
-        path.maxSpeed = maxMoveSpeed + (sanity / 100) + 0.5f;
-        
+
+        if (sceneName != "TitleScreen")
+        {
+            idleComplete = true;
+            ChangeSanity(-5f * Time.deltaTime);
+            // Increase speed while being chased
+            moveIncrement = Mathf.Clamp(moveIncrement + Time.deltaTime * 1, 0, 3.25f);
+            path.maxSpeed = maxMoveSpeed + moveIncrement; // (sanity / 100)
+        } else
+        {
+            path.maxSpeed = 2;
+        }
+
         // Look to run towards the nearest guard
         GameObject closestGuard = findClosestGuard();
         if (closestGuard != null)
@@ -266,6 +297,7 @@ public class FlightNPC : AbstractNPC
 
         // Update NPC animation
         animator.SetBool("Running", true);
+        
     }
 
     protected override void Dead()

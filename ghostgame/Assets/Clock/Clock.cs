@@ -8,9 +8,8 @@ public class Clock : MonoBehaviour
     AudioSource source;
     [SerializeField]
     AudioClip clip;
-    float totalTime = 0f;
     float elapsedTime = 72000f;
-    float timeScale = 60f;
+    float timeScale = 90f;
     float prevHour;
 
     void Start()
@@ -22,14 +21,13 @@ public class Clock : MonoBehaviour
 
     void Update()
     {
-        //check if time up
-        if (totalTime == 36000)
+        //check if time up || totaltime == 36000
+        if (Mathf.FloorToInt(elapsedTime / 3600f) == 6)
         {
             GameEvents.instance.LoseGame();
         }
 
         elapsedTime += Time.deltaTime * timeScale;
-        totalTime += Time.deltaTime * timeScale;
 
         //update text
         int hours = Mathf.FloorToInt(elapsedTime/3600f);

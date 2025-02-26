@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveDirection = new Vector2(0, 0);
     [SerializeField]
     float moveSpeed;
+    float speedModifier;
     Rigidbody2D rigidBody2d;
     Animator anim;
     bool canMove;
@@ -82,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         yMin = minBoundaryObj.transform.position.y;
         // invisibility
         isInvisible = false;
+        speedModifier = 1.5f;
         wallLayer = LayerMask.GetMask("Obstacle");
         collisionObjectsLayer = LayerMask.GetMask("CollisionObjects");
         canMove = true;
@@ -255,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
             ManageColliders(isInvisible);
             spriteRenderer.sortingLayerName = "Invisible";
             invisCooldown = true;
+            moveSpeed += speedModifier;
             StartCoroutine(InvisibilityCD());
         }
     }
@@ -270,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitUntil(() => canMove);
         boxCollider2d.enabled = true;
         isInvisible = false;
+        moveSpeed -= speedModifier;
         TransparencyChange(1f);
         ManageColliders(isInvisible);
         spriteRenderer.sortingLayerName = "Collisions";

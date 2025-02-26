@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1442111860152879333}
   - component: {fileID: 4903137019393448060}
+  - component: {fileID: -7260700159063342012}
   m_Layer: 0
   m_Name: FlightNPCBlueDead
   m_TagString: Untagged
@@ -87,3 +88,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7260700159063342012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319447330681789266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de29e06e318fe1447a7bd4b910630022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

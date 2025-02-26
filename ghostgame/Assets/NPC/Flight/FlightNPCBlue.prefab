@@ -370,8 +370,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets: []
-  clip: {fileID: 8300000, guid: 524e51f5b84e88340a3693f635487fed, type: 3}
   deadPrefab: {fileID: 5319447330681789266, guid: e617b635f3226b14cb2cebb393231d62, type: 3}
+  currentState: 0
 --- !u!50 &6940403362175856242
 Rigidbody2D:
   serializedVersion: 5
@@ -525,10 +525,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 524e51f5b84e88340a3693f635487fed, type: 3}
+  m_Resource: {fileID: 8300000, guid: 524e51f5b84e88340a3693f635487fed, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.03
   m_Pitch: 0.75
   Loop: 0
   Mute: 0

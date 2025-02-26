@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30.715164, y: -2.7801523}
+  m_AnchoredPosition: {x: -0.04, y: 1.22}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3351930383295242907
@@ -381,9 +381,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d0caba8b0e0fb41b55f8526735346a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
-  clip: {fileID: 8300000, guid: 524e51f5b84e88340a3693f635487fed, type: 3}
+  targets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   deadPrefab: {fileID: 2582490768774636317, guid: f78767a64d30926499bc30455e32651b, type: 3}
+  currentState: 0
 --- !u!50 &6940403362175856242
 Rigidbody2D:
   serializedVersion: 5
@@ -537,10 +541,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 524e51f5b84e88340a3693f635487fed, type: 3}
+  m_Resource: {fileID: 8300000, guid: 524e51f5b84e88340a3693f635487fed, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.03
   m_Pitch: 1
   Loop: 0
   Mute: 0
