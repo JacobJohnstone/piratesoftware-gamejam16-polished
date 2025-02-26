@@ -2,7 +2,7 @@
 
 <h4 align="center">An update to the game jam submission that removes bugs and balances the game to create a cleaner demo experience!</h4>
 <h3 align="center"><a href="https://malcolmfonseca.itch.io/haunting-grounds/">Play here!</a></h3>
-<h3 align="center"><a href="https://malcolmfonseca.itch.io/haunting-grounds/">See original submission here!</a></h3>
+<h3 align="center"><a href="https://itch.io/jam/pirate16/rate/3289215">See original submission here!</a></h3>
 
 ## 👻 Overview
 The game was created following the theme <b>YOU ARE THE WEAPON!</b> With this we created <b>Haunting Grounds,</b> an action game with stealth elements where the player, as a ghost, attempts to clear out their former home by scaring the current residents. The game takes place in a single large castle level, where the player can scare residents by turning off lights, throwing objects, and appearing before them. Be wary of the guards however, who will try to banish the player with their flashlights. Also watch the clock, as once it strikes 6:00a.m. the morning light will rid you of the castle. Once all residents have lost their sanity the player has reclaimed their home and has won the game.
